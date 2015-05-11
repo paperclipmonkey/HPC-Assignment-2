@@ -1,0 +1,15 @@
+#!/bin/bash --login
+#BSUB -J mpi
+#BSUB -o mpi.out
+#BSUB -e mpi.err
+#BSUB -W 01:00
+##BSUB -P samXXXX
+##BSUB -U samXXXX
+#BSUB -n 16
+BSUB -R "span[ptile=1]"
+
+module purge
+module load compiler/intel
+module load mpi/intel
+
+mpirun -np $LSB_DJOB_NUMPROC ./mpi >& mpi.log.$LSB_JOBID
